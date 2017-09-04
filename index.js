@@ -1,4 +1,6 @@
 var Noble = require('./lib/noble');
-var bindings = require('./lib/resolve-bindings')();
+var bindings = require('./lib/resolve-bindings');
 
-module.exports = new Noble(bindings);
+module.exports = function(deviceId) {
+  return new Noble(bindings(deviceId));
+};

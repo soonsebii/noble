@@ -11,6 +11,37 @@ Want to implement a peripheral? Checkout [bleno](https://github.com/sandeepmistr
 
 __Note:__ macOS / Mac OS X, Linux, FreeBSD and Windows are currently the only supported OSes. Other platforms may be developed later on.
 
+## Changes
+It was inspired by this [issue](https://github.com/sandeepmistry/noble/issues/578).
+
+### Examples
+```javascript
+var Noble = require('noble');
+
+var initNoble = function(hci) {
+  var id = hci._bindings._hci._deviceId;
+
+  hci.on('stateChange', function(state) {
+    if (state === 'poweredOn') {
+      console.log('hci:' + id + ' Start scanning');
+      hci.startScanning();
+    } else {
+      console.log('hci:' + id + ' powered off');
+    }
+  });
+
+  hci.on('discover', function(peripheral) {
+    console.log(peripheral);
+  });
+}
+
+var nobleDongle0 = new Noble(0);
+var nobleDongle1 = new Noble(1);
+
+initNoble(nobleDongle0);
+initNoble(nobleDongle1);
+```
+
 ## Prerequisites
 
 ### OS X
